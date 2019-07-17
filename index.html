@@ -2,15 +2,23 @@
 <html lang="en">
 
 <head>
+    <title>Train-Scheduler</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="assets/style.css">
    
-    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
 
-    <!-- <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> -->
+    <!-- firebase link 2: database -->
+<script src="<script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js"></script>  -->
 
 </head>
 
@@ -24,23 +32,23 @@
     <div class="container ">
             <div class="card" id="first">
                     <div class="card-header bg-secondary text-white">
-                      ACTIVE TRAIN SCHEDULE
+                      <strong>ACTIVE TRAIN SCHEDULE</strong>
                     </div>
                 <div class="card-body text-center">
            
      <!-- <div class="card" > -->
-                    <table class="table table-borderless table-secondary">
+                    <table class="table table-borderless table-secondary table-hover">
                         <thead>
                             <tr>
-                                <th scope="col-name">Train Name</th>
-                                <th scope="col-dest">Destination</th>
-                                <th scope="col-freq">Frequency (min)</th>
-                                <th scope="col-arr">Next Arrival</th>
-                                <th scope="col-away">Minutes Away</th>
+                                <th scope="name">Train Name</th>
+                                <th scope="dest">Destination</th>
+                                <th scope="freq">Frequency (min)</th>
+                                <th scope="arr">Next Arrival</th>
+                                <th scope="away">Minutes Away</th>
                             </tr>
                         </thead>
                         <tbody>
-
+<!--  add jQuery -->
                         </tbody>
                     </table>
                 </div> 
@@ -52,35 +60,28 @@
     <div class="container">
             <div class="card">
                     <div class="card-header bg-secondary text-white">
-                    ADD TRAIN
+                    <strong>TRAIN</strong> 
                     </div>
                 <div class="card-body">
 
         <!-- <div class="card"> -->
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-2 col-form-label">Train Name:</label>
-                        
-                        <div class="col">
-                            <input class="form-control" type="text" placeholder="add Name" id="name">
-                        </div>
+                        <input class="form-control" type="text" placeholder="add Name" id="name">
                     </div>
-                    <div class="form-group row">
+                    
+                    <div class="form-group">
                         <label  class="col-2 col-form-label">Destination:</label>
-                        <div class="col">
                             <input class="form-control" type="text" placeholder="add Destination" id="destination">
-                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">First Train Time: (HH:mm MT)</label>
-                        <div class="col">
+
+                    <div class="form-group">
+                        <label class="col-3 col-form-label">First Train Time: (HH:mm MT)</label>
                             <input class="form-control" type="text" placeholder="add Time" id="train-time">
-                        </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-2 col-form-label">Frequency (min):</label>
-                        <div class="col">
                             <input class="form-control" type="number" placeholder="add Frequency" id="frequency">
-                        </div>
                     </div>
                     <!-- <div class="col-sm-12"> -->
                     <button type="submit" class="btn btn-primary float-right" id="form-submit-btn">Submit</button>
@@ -89,11 +90,13 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script> -->
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->

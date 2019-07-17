@@ -17,18 +17,35 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
 
   // Create a variable to reference the database
-  let database = firebase.database();
+  let trainData = firebase.database();
 
 // Create an on click function that adds trains to the top table
   $('#form-submit-btn').on('click', function(event){
       event.preventDefault();
 
 // create variables with the user input from form
+
+    var name = $("#name").val().trim();
+    var trainDest = $("#destination").val().trim();
+    var trainTime = $("#train-time").val().trim();
+    var trainFreq = $("#frequency").val().trim();
   
 // create a temporary object for holding the new train data
+var newTrain = { 
+    name: name,
+    trainDest: trainDest,
+    trainTime: trainTime,
+    trainFreq: trainFreq
 }
 
+trainData.ref().push(newTrain)
+
 // upload the new train data to the database
+$("#name").val("");
+      $("#destination").val("");
+      $("#train-time").val("");
+      $("#frequency").val("");
+});
 
 // console log the values that were just pushed to the database
 
