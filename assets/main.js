@@ -41,14 +41,25 @@ var newTrain = {
 trainData.ref().push(newTrain)
 
 // upload the new train data to the database
-$("#name").val("");
-      $("#destination").val("");
-      $("#train-time").val("");
-      $("#frequency").val("");
+    $("#name").val("");
+    $("#destination").val("");
+    $("#train-time").val("");
+    $("#frequency").val("");
+
+    return false;
 });
 
-// console log the values that were just pushed to the database
+trainData.ref().on("child_added",function(snapshot){
+    var name =snapshot.val().name;
+    var trainDest =snapshot.val().trainDest;
+    var trainTime =snapshot.val().trainTime;
+    var trainFreq =snapshot.val().trainFreq;
 
+// console log the values that were just pushed to the database
+console.log(name);
+  console.log(trainDest);
+  console.log(trainTime);
+  console.log(trainFreq);
 // clear the form values after values have been stored
 
 
@@ -65,4 +76,9 @@ $("#name").val("");
 // calculate and store the minutes until next train arrives
 // calculate the next arriving train
 // add the data into the DOM/html
+// nextTrain = nextTrain.tostring()
+// tMinutesTillTrain = tMinutesTillTrain.tostring();
+
+// $("#table > tbody").append("<tr><td>"+name+"</td><td>"+trainDest+"</td><td>"+trainFreq+"</td><td>"+nextTrain+"</td><td>"+tMinutesTillTrain+"</td></tr>");
+})
 });
