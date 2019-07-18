@@ -1,5 +1,5 @@
 
-$( document ).ready(function() {
+// $( document ).ready(function() {
     
   
  
@@ -17,10 +17,11 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
 
   // Create a variable to reference the database
-  let trainData = firebase.database();
+  var database = firebase.database();
 
 // Create an on click function that adds trains to the top table
   $('#form-submit-btn').on('click', function(event){
+    console.log("test");
       event.preventDefault();
 
 // create variables with the user input from form
@@ -29,16 +30,16 @@ var firebaseConfig = {
     var trainDest = $("#destination").val().trim();
     var trainTime = $("#train-time").val().trim();
     var trainFreq = $("#frequency").val().trim();
-  
+  console.log(name, trainDest, trainTime, trainFreq)
 // create a temporary object for holding the new train data
-var newTrain = { 
-    name: name,
-    trainDest: trainDest,
-    trainTime: trainTime,
-    trainFreq: trainFreq
-}
 
-trainData.ref().push(newTrain)
+          database.ref().push({
+              name: name,
+              trainDest: trainDest,
+              trainTime: trainTime,
+              trainFreq: trainFreq,
+            
+          });
 
 // upload the new train data to the database
     $("#name").val("");
@@ -46,39 +47,54 @@ trainData.ref().push(newTrain)
     $("#train-time").val("");
     $("#frequency").val("");
 
-    return false;
+    // return false;
 });
 
-trainData.ref().on("child_added",function(snapshot){
-    var name =snapshot.val().name;
-    var trainDest =snapshot.val().trainDest;
-    var trainTime =snapshot.val().trainTime;
-    var trainFreq =snapshot.val().trainFreq;
+database.ref().on("child_added",function(snapshot){
+    // var name =snapshot.val().name;
+    // var trainDest =snapshot.val().trainDest;
+    var trainTime=snapshot.val().trainTime;
+    var trainFreq=snapshot.val().trainFreq;
 
 // console log the values that were just pushed to the database
-console.log(name);
-  console.log(trainDest);
-  console.log(trainTime);
-  console.log(trainFreq);
-// clear the form values after values have been stored
+  // console.log(name);
+  // console.log(trainDest);
+  // console.log(trainTime);
+  // console.log(trainFreq);
+
+  var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
+ 
+  //Difference between the times
+  var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
+
+  // Time apart (remainder)
+  var timeRemaining = diffTime % trainFreq;
+
+  // Minute Until Train
+  var tillTrain = trainFreq - timeRemaining;
+
+  var nextTrain = moment().add(tillTrain, "minutes");
+  nextTrain=moment(nextTrain).format("hh:mm A");
+
+  nextTrain = nextTrain.toString();
+  tillTrain = tillTrain.toString();
 
 
-// create a firebase event for adding the data from the new trains and then populating them in the DOM.
 
-// store snapshot changes in variables
+// $("table tbody").append("<tr><td>"+ name +"</td><td>"+ trainDest +"</td><td>"+ trainFreq +"</td><td>"+ nextTrain +"</td><td>"+ tillTrain +"</td></tr>");
 
-// console.log the values
-// process for calculating the Next Arrival and Minutes Away fields...
-// make sure the first train time is after the eventual current time
-// store variable for current time
-// store variable for difference of current time and first train time
-// store the time left
-// calculate and store the minutes until next train arrives
-// calculate the next arriving train
-// add the data into the DOM/html
-// nextTrain = nextTrain.tostring()
-// tMinutesTillTrain = tMinutesTillTrain.tostring();
-
-// $("#table > tbody").append("<tr><td>"+name+"</td><td>"+trainDest+"</td><td>"+trainFreq+"</td><td>"+nextTrain+"</td><td>"+tMinutesTillTrain+"</td></tr>");
-})
+$("table tbody").append(
+  "<tr><td>"+snapshot.val().name+
+  "</td><td>"+snapshot.val().trainDest+
+  "</td><td>"+snapshot.val().trainFreq+
+  "</td><td>"+nextTrain+"</td><td>"+tillTrain+"</td></tr>");
 });
+
+
+
+
+// });
+
+
+
+// });

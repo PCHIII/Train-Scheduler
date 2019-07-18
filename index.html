@@ -9,101 +9,99 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="assets/style.css">
-   
-    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-
-
     
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    
+
+
 <!-- <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script> -->
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#config-web-app -->
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js"></script>  -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/af.js" integrity="sha256-I5ZXO8KcMnqNkrXU7baGig70nATYjNDnxxA2d40PcR8=" crossorigin="anonymous"></script> -->
+   
+    
 
 </head>
-
 <body>
     <div class="container pt-3">
-        <div class="jumbotron text-center bg-primary text-white">
-            <h1>Train Schedule</h1>
-        </div>
-    </div>
-
-    <div class="container ">
-            <div class="card" id="first">
-                    <div class="card-header bg-primary text-white">
-                      <strong>ACTIVE TRAIN SCHEDULE</strong>
-                    </div>
-                <div class="card-body text-center p-2">
-           
-     <!-- <div class="card" > -->
-                    <table class="table table-borderless table-white table-hover" id="table">
-                        <thead>
-                            <tr>
-                                <th scope="name">Train Name</th>
-                                <th scope="dest">Destination</th>
-                                <th scope="freq">Frequency (min)</th>
-                                <th scope="arr">Next Train Arrival</th>
-                                <th scope="away">Minutes Away</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-<!--  add jQuery -->
-                        </tbody>
-                    </table>
+        <div class="jumbotron text-center bg-dark text-white border border-white border-4">
+            <h1>TRAIN SCHEDULER</h1>
+        </div> 
+    </div> 
+    <div class="card-deck p-3"> 
+        <!-- <div class="row">  -->
+            <div class="col-lg-8" > 
+                <div class="card p-1" id="first">
+                        <div class="card-header bg-dark text-white">
+                        <strong>ACTIVE TRAIN SCHEDULE</strong>
+                        </div>
+                    <div class="card-body text-center p-2">
+            
+                                <table class="table table-borderless table-white table-hover" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Train Name</th>
+                                            <th>Destination</th>
+                                            <th>Frequency (min)</th>
+                                            <th>Next Train Arrival</th>
+                                            <th>Minutes Away</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--  add jQuery -->
+                                    </tbody>
+                                </table>
+                    </div> 
                 </div> 
-    
-            </div> 
-    </div>
+            </div>
+        <!-- </div> -->
+    <!-- </div> -->
+
 <br>
+    <!-- <div class="container"> -->
+        <!-- <div class="row">  -->
+            <div class="col-lg-4">
+                
+                <div class="card p-1">
+                        <div class="card-header bg-dark text-white">
+                        <strong>ADD TRAIN</strong> 
+                        </div>
+                    <div class="card-body p-2">
 
-    <div class="container">
-            <div class="card">
-                    <div class="card-header bg-primary text-white">
-                    <strong>TRAIN</strong> 
-                    </div>
-                <div class="card-body p-2">
+                                <div class="form-group">
+                                    <label class="col-3 col-form-label pl-1">Train Name:</label>
+                                    <input class="form-control" type="text" placeholder="add Name" id="name">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label  class="col-3 col-form-label pl-1">Destination:</label>
+                                        <input class="form-control" type="text" placeholder="add Destination" id="destination">
+                                </div>
 
-        <!-- <div class="card"> -->
-                    <div class="form-group">
-                        <label class="col-2 col-form-label pl-1">Train Name:</label>
-                        <input class="form-control" type="text" placeholder="add Name" id="name">
+                                <div class="form-group">
+                                    <label class="col-6 col-form-label pl-1">Train Time: (HH:mm MT)</label>
+                                        <input class="form-control" type="text" placeholder="00:00" id="train-time">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-6 col-form-label pl-1">Frequency (Mins):</label>
+                                        <input class="form-control" type="number" placeholder="00" id="frequency">
+                                </div>
+                        
+                            <button type="submit" class="btn btn-primary float-right mb-1" id="form-submit-btn">Submit</button>
                     </div>
-                    
-                    <div class="form-group">
-                        <label  class="col-2 col-form-label pl-1">Destination:</label>
-                            <input class="form-control" type="text" placeholder="add Destination" id="destination">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-3 col-form-label pl-1">First Train Time: (HH:mm MT)</label>
-                            <input class="form-control" type="text" placeholder="add Time" id="train-time">
-                    </div>
-                    <div class="form-group">
-                        <label class="col-2 col-form-label pl-1">Frequency (min):</label>
-                            <input class="form-control" type="number" placeholder="add Frequency" id="frequency">
-                    </div>
-                    <!-- <div class="col-sm-12"> -->
-                    <button type="submit" class="btn btn-primary float-right mb-1" id="form-submit-btn">Submit</button>
+                            
                 </div>
             </div>
-    </div>
-
+        <!-- </div>  -->
+    </div> 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
 
-    <!-- <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script> -->
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#config-web-app -->
-
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script> 
     
     <script src="assets/main.js"></script>
 

@@ -4,8 +4,12 @@ body {
 }
 
 .jumbotron {
-    padding: 0.5em 0.6em;
+    padding: 1em 0.8em;
+    
     h1 {
         font-size: 2em;
     }
+}
+.border-4 {
+    border-width:4px !important;
 }
