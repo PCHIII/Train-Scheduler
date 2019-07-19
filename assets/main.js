@@ -25,12 +25,18 @@ var firebaseConfig = {
       event.preventDefault();
 
 // create variables with the user input from form
+    var name = "";
+    var trainDest = "";
+    var trainTime = "";
+    var trainFreq = "";
+
+
 
     var name = $("#name").val().trim();
     var trainDest = $("#destination").val().trim();
     var trainTime = $("#train-time").val().trim();
     var trainFreq = $("#frequency").val().trim();
-  console.log(name, trainDest, trainTime, trainFreq)
+  // console.log(name, trainDest, trainTime, trainFreq)
 // create a temporary object for holding the new train data
 
           database.ref().push({
@@ -42,19 +48,21 @@ var firebaseConfig = {
           });
 
 // upload the new train data to the database
-    $("#name").val("");
-    $("#destination").val("");
-    $("#train-time").val("");
-    $("#frequency").val("");
 
-    // return false;
+
+    // $("#name").val("");
+    // $("#destination").val("");
+    // $("#train-time").val("");
+    // $("#frequency").val("");
+
+    return false;
 });
 
-database.ref().on("child_added",function(snapshot){
+database.ref().on("child_added", function(childSnapshot){
     // var name =snapshot.val().name;
     // var trainDest =snapshot.val().trainDest;
-    var trainTime=snapshot.val().trainTime;
-    var trainFreq=snapshot.val().trainFreq;
+    var trainTime=childSnapshot.val().trainTime;
+    var trainFreq=childSnapshot.val().trainFreq;
 
 // console log the values that were just pushed to the database
   // console.log(name);
@@ -63,12 +71,16 @@ database.ref().on("child_added",function(snapshot){
   // console.log(trainFreq);
 
   var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
- 
+  // console.log(trainTimeConverted);
+  
+
   //Difference between the times
   var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
+  // console.log(diffTime)
 
   // Time apart (remainder)
   var timeRemaining = diffTime % trainFreq;
+  // console.log(timeRemaining)
 
   // Minute Until Train
   var tillTrain = trainFreq - timeRemaining;
@@ -84,9 +96,9 @@ database.ref().on("child_added",function(snapshot){
 // $("table tbody").append("<tr><td>"+ name +"</td><td>"+ trainDest +"</td><td>"+ trainFreq +"</td><td>"+ nextTrain +"</td><td>"+ tillTrain +"</td></tr>");
 
 $("table tbody").append(
-  "<tr><td>"+snapshot.val().name+
-  "</td><td>"+snapshot.val().trainDest+
-  "</td><td>"+snapshot.val().trainFreq+
+  "<tr><td>"+childSnapshot.val().name+
+  "</td><td>"+childSnapshot.val().trainDest+
+  "</td><td>"+childSnapshot.val().trainFreq+
   "</td><td>"+nextTrain+"</td><td>"+tillTrain+"</td></tr>");
 });
 
