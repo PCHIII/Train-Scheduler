@@ -1,7 +1,7 @@
 
 // $( document ).ready(function() {
     
-  
+// Initialize Firebase  
  
 var firebaseConfig = {
     apiKey: "AIzaSyBHX8ftVmL-MN1Y_2hWYc8IqWfdO1p5S-E",
@@ -12,31 +12,33 @@ var firebaseConfig = {
     messagingSenderId: "988607153189",
     appId: "1:988607153189:web:cda29f8f36e89661"
   };
-
- // Initialize Firebase
+ 
   firebase.initializeApp(firebaseConfig);
 
-  // Create a variable to reference the database
+  // Create a variable for database
   var database = firebase.database();
 
-// Create an on click function that adds trains to the top table
+// Create an on click function that adds trains to the appended table
   $('#form-submit-btn').on('click', function(event){
     console.log("test");
       event.preventDefault();
-
-// create variables with the user input from form
+  
+     
+// $('#form-submit-btn').children('input').val('')
+// create variables to holding the train data
     var name = "";
     var trainDest = "";
     var trainTime = "";
     var trainFreq = "";
 
 
-
+// input from form
     var name = $("#name").val().trim();
     var trainDest = $("#destination").val().trim();
     var trainTime = $("#train-time").val().trim();
     var trainFreq = $("#frequency").val().trim();
   // console.log(name, trainDest, trainTime, trainFreq)
+
 // create a temporary object for holding the new train data
 
           database.ref().push({
@@ -47,53 +49,62 @@ var firebaseConfig = {
             
           });
 
-// upload the new train data to the database
-
-
-    // $("#name").val("");
-    // $("#destination").val("");
-    // $("#train-time").val("");
-    // $("#frequency").val("");
-
-    return false;
-});
-
-database.ref().on("child_added", function(childSnapshot){
-    // var name =snapshot.val().name;
-    // var trainDest =snapshot.val().trainDest;
-    var trainTime=childSnapshot.val().trainTime;
-    var trainFreq=childSnapshot.val().trainFreq;
-
-// console log the values that were just pushed to the database
   // console.log(name);
   // console.log(trainDest);
   // console.log(trainTime);
   // console.log(trainFreq);
 
+// clear form
+
+    $("#name").val("");
+    $("#destination").val("");
+    $("#train-time").val("");
+    $("#frequency").val("");
+
+    return false;
+});
+
+// add firebase data back to webapge
+database.ref().on("child_added", function(childSnapshot){
+  console.log(childSnapshot.val());
+    // var name =childSnapshot.val().name;
+    // var trainDest =childSnapshot.val().trainDest;
+    var trainTime=childSnapshot.val().trainTime;
+    var trainFreq=childSnapshot.val().trainFreq;
+
+
+  // Calculating next train (pushing the first train back one year to ensure it comes before the current time)
+
   var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
   // console.log(trainTimeConverted);
   
 
-  //Difference between the times
+  //Difference between the current times and entered train
   var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
-  // console.log(diffTime)
+  
 
   // Time apart (remainder)
   var timeRemaining = diffTime % trainFreq;
-  // console.log(timeRemaining)
+  // console.log(diffTime)
 
-  // Minute Until Train
+  // Minute Until next Train
   var tillTrain = trainFreq - timeRemaining;
+// console.log(timeRemaining)
 
+// calculating next train time
   var nextTrain = moment().add(tillTrain, "minutes");
+
+  // current time
   nextTrain=moment(nextTrain).format("hh:mm A");
 
   nextTrain = nextTrain.toString();
   tillTrain = tillTrain.toString();
 
-
+// $('#form-submit-btn').find('input').val('');
 
 // $("table tbody").append("<tr><td>"+ name +"</td><td>"+ trainDest +"</td><td>"+ trainFreq +"</td><td>"+ nextTrain +"</td><td>"+ tillTrain +"</td></tr>");
+
+// add train data into table body
 
 $("table tbody").append(
   "<tr><td>"+childSnapshot.val().name+
@@ -102,7 +113,7 @@ $("table tbody").append(
   "</td><td>"+nextTrain+"</td><td>"+tillTrain+"</td></tr>");
 });
 
-
+// 
 
 
 // });
